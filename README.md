@@ -1,58 +1,100 @@
-# 🧠 Assignment: Interactive Web Pages with JavaScript
+Index.html
 
-Welcome to the exciting world of interactivity! This assignment is all about **making your web pages feel alive**. You’ll learn how to respond to user actions, build engaging components, and validate form input—without reloading the page. This is where JavaScript gets fun, practical, and powerful. 🚀
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive JavaScript Project</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Welcome to My Interactive Page</h1>
 
----
+  <!-- Light/Dark Mode Toggle -->
+  <button id="themeToggle">Toggle Theme</button>
 
-## 🎉 Part 1: JavaScript Event Handling and Interactive Elements
+  <!-- Counter Game -->
+  <div>
+    <p>Score: <span id="counter">0</span></p>
+    <button id="incrementBtn">Increase</button>
+  </div>
 
-Let’s start with the basics of **event handling**. You'll set up JavaScript to listen for user actions like clicks, mouseovers, keyboard input, and more—and respond to them in meaningful ways.
+  <!-- Collapsible FAQ -->
+  <div class="faq">
+    <h3 class="faq-question">What is JavaScript?</h3>
+    <p class="faq-answer hidden">JavaScript is a programming language for the web.</p>
+  </div>
 
-**Goal:** Use event listeners to react to user behavior and trigger changes on the page (e.g., showing messages, toggling classes, hiding/showing content).
+  <!-- Form Section -->
+  <form id="signupForm">
+    <label>Name: <input type="text" id="name" /></label><br />
+    <label>Email: <input type="email" id="email" /></label><br />
+    <label>Password: <input type="password" id="password" /></label><br />
+    <button type="submit">Sign Up</button>
+    <p id="formMessage"></p>
+  </form>
 
----
+  <script src="script.js"></script>
+</body>
+</html>
 
-## 🎮 Part 2: Building Interactive Elements
+Script.js
 
-Now it’s time to apply what you’ve learned by creating your own mini interactive features. You can build things like:
+// 🌗 Light/Dark Mode Toggle
+document.getElementById('themeToggle').addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+});
 
-* A light/dark mode toggle
-* A counter or button game
-* A collapsible FAQ section
-* A simple dropdown menu
-* A tabbed interface
+// 🎮 Counter Game
+let count = 0;
+document.getElementById('incrementBtn').addEventListener('click', () => {
+  count++;
+  document.getElementById('counter').textContent = count;
+});
 
-**Goal:** Use DOM manipulation + events to make the page dynamic and engaging. Be creative!
+// 📚 Collapsible FAQ
+document.querySelector('.faq-question').addEventListener('click', () => {
+  document.querySelector('.faq-answer').classList.toggle('hidden');
+});
 
----
+// 📋✅ Form Validation
+document.getElementById('signupForm').addEventListener('submit', function (e) {
+  e.preventDefault(); // Prevent form submission
 
-## 📋✅ Part 3: Form Validation with JavaScript
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const message = document.getElementById('formMessage');
 
-Forms are essential to the web—and validating them properly is key to good user experience. You’ll build a form with multiple input fields (name, email, password, etc.) and write JavaScript to validate each field when the user submits or types.
+  // Simple regex for email and password validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
-**Goal:** Prevent incorrect form submissions by writing custom validation logic using conditions and regular expressions. Show user-friendly error messages and success feedback.
+  if (!name) {
+    message.textContent = 'Name is required.';
+  } else if (!emailRegex.test(email)) {
+    message.textContent = 'Please enter a valid email.';
+  } else if (!passwordRegex.test(password)) {
+    message.textContent = 'Password must be at least 6 characters and include a number.';
+  } else {
+    message.textContent = 'Form submitted successfully!';
+    message.style.color = 'green';
+  }
+});
 
----
+style.css
 
-## Deliverables
+body.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
 
-* `index.html`: Your structured web page with at least one form and several interactive sections
-* `script.js`: Your JavaScript file with:
+.hidden {
+  display: none;
+}
 
-  * Event handling for buttons, inputs, or links
-  * At least 2 interactive features created from scratch
-  * A fully functioning custom form validation (no HTML5-only validation)
-* `style.css` (optional but encouraged): To style your interactive elements
-
-Each section of your JavaScript should be commented to explain its purpose.
-
----
-
-## Outcome
-
-* Use of event listeners and appropriate event types
-* Creativity and functionality of interactive elements
-* Form validation accuracy and helpfulness of feedback
-* Clear, modular, and well-commented JavaScript code
-* A clean and functional user experience
-
+.faq {
+  margin-top: 20px;
+  cursor: pointer;
+}
